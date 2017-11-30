@@ -44,8 +44,8 @@ int main() {
                           }
                   }
                    
-          }*/
-
+          }*/ // bug not fixed
+  cout << "a lot of bug";
   cout << "end" << endl;
 
   cout << min_mark << " " << count_person_continue + count_person << endl;
