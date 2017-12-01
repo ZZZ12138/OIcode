@@ -43,8 +43,11 @@ int main() {
      out_person[1][count_person]; count_person++; count_the_same_mark++;
                           }
                   }
-                   
-          }*/ // bug not fixed
+                   
+          }*/
+
+  // test_github
+  // bug not fixed
   cout << "a lot of bug";
   cout << "end" << endl;
 
