@@ -13,7 +13,7 @@ int main(){
 		cin >> A;
 		if (A == 1) cout << "233";
 		else cout << "666";
-	} //垃圾数组
+	} //
 
 	int B;
 	cin >> B;
