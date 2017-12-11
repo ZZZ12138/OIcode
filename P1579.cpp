@@ -4,7 +4,7 @@ using namespace std;
 int _count = 0;
 int numb[10];
 bool primer[20000+10];
-void check_primer();
+void check_primer(int n);
 void check(int n);
 
 int main(){
@@ -15,14 +15,14 @@ int main(){
 	return 0;
 }
 
-void check_primer(){
-	for (int i = 1; i <= 20000; i++) primer[i] = 1;
+void check_primer(int n){
+	for (int i = 1; i <= n; i++) primer[i] = 1;
 	primer[1] = 0;//1不是质数 
-	for(int i = 2; i <= 20000 ; i++){
+	for(int i = 2; i <= n ; i++){
 		for (int j = 2; j <= 10000; j++){
-			int n = i * j;
-			if(n > 20000) break;
-			else primer[n] = 0;
+			int m = i * j;
+			if(m > 20000) break;
+			else primer[m] = 0;
 		}
 		
 	}
