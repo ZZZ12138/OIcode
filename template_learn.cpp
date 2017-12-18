@@ -30,3 +30,6 @@ int _tmain(int argc, _TCHAR* argv[])
     while(1);  
     return 0;  
 }  
+
+
+//http://www.cnblogs.com/cs1003/archive/2012/08/22/2651175.html
