@@ -7,9 +7,8 @@ struct Node{
 };
 
 struct Slist{
-    Node *head, *last;
-    void Create_list();
-    Create_list();
+    Node *head, *last, *node;
+    Slist();
     int len = 1;
     void add();
     void travell_all();
@@ -17,11 +16,18 @@ struct Slist{
 };
 
 int main(){
-
-
+	Slist beta;
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++){
+		beta.add();	
+	}
+	
+	beta.travell_all();
+	return 0;
 }
 
-void Slist::Create_list(){
+Slist::Slist(){
     head = NULL;
     last = NULL;
 }
@@ -44,6 +50,9 @@ void Slist::add(){
 }
 
 void Slist::travell_all(){
-    node = haed;
-    
+    node = head;
+    while (node!=NULL){
+    cout << node->data << endl;
+    node = node->next;
+    }
 }
