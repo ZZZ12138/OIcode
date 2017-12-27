@@ -1,22 +1,30 @@
 #include <iostream>
 using namespace std;
-void swap(int &a, int &b) {
-  int temp = a;
-  a = b;
-  b = temp;
-} //交换变量
+
+int _max(int a, int b){
+	if(a >= b) return a;
+	else return b;
+}
+int _min(int a, int b){
+	if(a <= b) return a;
+	else return b;
+}
 
 int main() {
   int L;
   int N;
   cin >> L >> N;
-
-  int temp1;
-  int temp2;
-  cin >> temp2;
-  for (int i = 0; i < N; i++) {
-    cin >> temp1;
-    swap(temp1, temp2);
+  
+  int temp;  
+  int min = 0;
+  int max = 0;
+  for (int i = 1; i <= N; i++) {
+  	cin >> temp;
+    min = _max(min, _min(temp, L+1-temp));
+    max = _max(max, _max(temp,L+1-temp));
   }
+  
+  cout << min << " " << max;
+  return 0;
 }
-//Not complete and lots of bugs
+//贪心
