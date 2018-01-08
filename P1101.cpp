@@ -3,7 +3,7 @@ using namespace std;
 
 struct word{
     char a;
-	int check;	 	
+    int check;	 	
 };
 char apl[10] = "yizhong";
 int n;
@@ -13,12 +13,14 @@ void dfs1(int x, int y);
 void dfs2(int x, int y, int dx, int dy, int c);
 void input(int x);
 void chuli();
+void print();
 
 int main(){
-	cin >> n;
-	input(n);
-	dfs(1,1);
-	return 0;
+    cin >> n;
+    input(n);
+    dfs1(1,1);
+	print();
+    return 0;
 }
 
 void input(int x){
@@ -58,4 +60,28 @@ void dfs2(int x, int y, int dx, int dy, int c){
 	if(w[x+dx][y+dy].a == apl[c]){
 		dfs2(x+dx,y+dy,dx,dy,c+1);
 	}//如果下个字符也相等，继续移动 
+}
+
+void chuli(int x, int y, int dx, int dy){
+	for(int i = 1; i <= 7; i++){
+		w[x][y].check = 1;
+		x -= dx;
+		y -= dy;
+	
+	}
+}
+
+void print(){
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			if(w[i][j].check == 1){
+				cout << w[i][j].a;
+			}
+			else {
+				cout << "*";
+			}
+		}
+		cout << endl;
+	}
+
 }
