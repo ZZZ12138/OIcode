@@ -10,22 +10,34 @@ int main() {
   for (int i = 1; i <= n; i++) {
     cin >> numb[i];
   }
-  int head = 1;
-  int last = n;
-  int count = 0;
-  while (n > 0) {
-    int tot = 0;
-    for (int i = last; i >= head; i--) {
-      tot += numb[i];
-      if (tot <= m) {
-        last--;
-      } else {
-        break;
-      }
-    }
+    int head = 1;
+    int last = n;
+    int count = 0;
+    while (n > 0) {
+        int tot = 0;
+        for (int i = last; i >= head; i--) {
+            tot += numb[i];
+            if (tot <= m) {
+              last--;
+              n--;
+            } 
+            else {
+              break;
+            }
+        }
 
-    for (int i = head; i <= last; i++) {
+        for (int i = head; i <= last; i++) {
+            tot += numb[i];
+            if(tot <= m){
+              head++;
+              n--;
+            }
+            else{
+              break;
+            }
+        }
+        count++;
     }
-  }
-}
+    cout << count;
+    return 0; 
 }
