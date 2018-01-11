@@ -18,7 +18,13 @@ void print();
 int main() {
   cin >> n;
   input(n);
-  dfs1(1, 1);
+  
+  for(int i = 1; i <= n; i++){
+      for(int j = 1; j <= n; j++){
+            dfs1(i, j);        
+      }
+  }
+  
   print();
   return 0;
 }
@@ -49,7 +55,7 @@ void dfs1(int x, int y) {
 }
 
 void dfs2(int x, int y, int dx, int dy, int c) {
-  if (c > 7) {
+  if (c >= 7) {
     chuli(x, y, dx, dy);
     return;
   } //超过7后进行处理并返回
@@ -62,6 +68,7 @@ void dfs2(int x, int y, int dx, int dy, int c) {
 }
 
 void chuli(int x, int y, int dx, int dy) {
+    cout << x << " " << y << endl;
   for (int i = 1; i <= 7; i++) {
     w[x][y].check = 1;
     x -= dx;
@@ -78,6 +85,7 @@ void print() {
         cout << "*";
       }
     }
+    if(i == n) return;
     cout << endl;
   }
 }
