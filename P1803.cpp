@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 
 struct time{
@@ -16,15 +17,15 @@ bool cmp(time a, time b){
     else{
         return a.end < b.end;
     }
-}
+}//将结束时间少的排到前面，若一样则排开始时间 
 
 int main(){
     int n;
     cin >> n;
     for(int i = 0; i < n; i++){
-        cin >> exam.start;
-        cin >> exam.end;
-        c_time = exam.end - exam.start;
+        cin >> exam[i].start;
+        cin >> exam[i].end;
+        exam[i].c_time = exam[i].end - exam[i].start;
     }
     sort(exam,exam+n,cmp);
 
@@ -36,5 +37,7 @@ int main(){
             count++;
         }
     }
+    cout << count;
+    return 0; 
     
 }
