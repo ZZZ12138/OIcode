@@ -22,7 +22,7 @@ void in() {
 		cin >> temp1;
 		for (int j = 1; j <= n; j++)
 		{
-			block[i][j] = temp1[j - 1] - 48;
+			block[i][j] = temp1[j - 1] - 48;//第一个为x，第二个为y
 		}
 	}
 }
@@ -30,29 +30,29 @@ void in() {
 int tot;
 
 void dfs(int x, int y) {
-	if (x < 1 || x > n || y < 1 || y > n) {
-		return;//超出边界
-	}
-	if (temp[x][y] != 0) {
-		return;//被搜索过
+	if (x > n || x < 1 || y > n || y < 1) return;
+	if (temp[x][y] > 0) return;
+	else {
+		temp[x][y] = 1;//打上标记
+		tot++;//当前联通块+1
+		if (block[x + 1][y] != block[x][y]) dfs(x + 1, y);
+		if (block[x - 1][y] != block[x][y]) dfs(x - 1, y);
+		if (block[x][y + 1] != block[x][y]) dfs(x, y + 1);
+		if (block[x][y - 1] != block[x][y]) dfs(x, y - 1);
 	}
 
-	tot++;
-	temp[x][y] = 1;
-	int temp1 = block[x][y];
-	if (block[x - 1][y] != temp1) {
-		dfs(x - 1, y);
+}
+
+void push_ans(int x, int y) {
+	if (x > n || x < 1 || y > n || y < 1) return;
+	if (ans[x][y] > 0) return;
+	else {
+		ans[x][y] = tot;
+		if (block[x + 1][y] != block[x][y]) push_ans(x + 1, y);
+		if (block[x - 1][y] != block[x][y]) push_ans(x - 1, y);
+		if (block[x][y + 1] != block[x][y]) push_ans(x, y + 1);
+		if (block[x][y - 1] != block[x][y]) push_ans(x, y - 1);
 	}
-	if (block[x + 1][y] != temp1) {
-		dfs(x + 1, y);
-	}
-	if (block[x][y - 1] != temp1) {
-		dfs(x, y - 1);
-	}
-	if (block[x][y + 1] != temp1) {
-		dfs(x, y + 1);
-	}
-	ans[x][y] = tot;
 }
 
 int main() {
@@ -60,12 +60,13 @@ int main() {
 	for (int i = 0; i < m; i++) {
 		int x, y;
 		cin >> x >> y;
-		if (ans[x][y] != 0) {
+		if (temp[x][y] != 0) {
 			cout << ans[x][y] << endl;
 		}
 		else {
 			tot = 0;
 			dfs(x, y);
+			push_ans(x, y);
 			cout << ans[x][y] << endl;
 		}
 	}
