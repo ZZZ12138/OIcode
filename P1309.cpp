@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stack>
+#include<queue>
 #include<algorithm>
 using namespace std;
 
@@ -10,9 +11,9 @@ struct person {
 };
 
 person player[200000 + 10];
-stack<person> winner;
-stack<person> loser;
-stack<person> tot;
+queue<person> winner;
+queue<person> loser;
+queue<person> tot;
 
 bool cmp(person a, person b) {
 	if (a.mark == b.mark) return a.id < b.id;
@@ -21,15 +22,15 @@ bool cmp(person a, person b) {
 
 void mergesort() {
 	while (!winner.empty() && !loser.empty()) {
-		int w_mark = winner.top().mark;
-		int l_mark = loser.top().mark;
+		int w_mark = winner.front().mark;
+		int l_mark = loser.front().mark;
 		if (w_mark > l_mark) {
-			tot.push(winner.top());
+			tot.push(winner.front());
 			winner.pop();
 		}//分数较大者直接入tot
 		else {
 			if (w_mark == l_mark) {
-				int w_id = winner.top().id;
+				int w_id = winner.front().id;
 				int l_id = loser.front().id;
 				if (w_id < l_id) {
 					tot.push(winner.front());
