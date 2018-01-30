@@ -1,81 +1,104 @@
 #include<iostream>
+#include<stack>
 #include<algorithm>
 using namespace std;
 
-struct person{
-    int id;
-    int power;
-    int mark;
+struct person {
+	int id;
+	int mark;
+	int power;
 };
 
-person player[200000+10];
+person player[200000 + 10];
+stack<person> winner;
+stack<person> loser;
+stack<person> tot;
 
-bool cmp1(person a, person b){
-    if(a.mark == b.mark) return a.id < b.id;
-    else return a.mark > b.mark;
+bool cmp(person a, person b) {
+	if (a.mark == b.mark) return a.id < b.id;
+	else return a.mark > b.mark;
 }
 
-void _swap(person &a, person &b){
-	struct person temp;
-	temp = a;
-	a = b;
-	b = temp;
+void mergesort() {
+	while (!winner.empty() && !loser.empty()) {
+		int w_mark = winner.top().mark;
+		int l_mark = loser.top().mark;
+		if (w_mark > l_mark) {
+			tot.push(winner.top());
+			winner.pop();
+		}//分数较大者直接入tot
+		else {
+			if (w_mark == l_mark) {
+				int w_id = winner.top().id;
+				int l_id = loser.front().id;
+				if (w_id < l_id) {
+					tot.push(winner.front());
+					winner.pop();
+				}
+				else {
+					tot.push(loser.front());
+					loser.pop();
+				}//id较小者入tot
+			}
+			else {
+				tot.push(loser.front());
+				loser.pop();
+			}
+		}
+	}
+
+	while (!winner.empty()) {
+		tot.push(winner.front());
+		winner.pop();
+	}
+	while (!loser.empty()) {
+		tot.push(loser.front());
+		loser.pop();
+	}//用tot储存新的排名
+	return;
 }
 
-void complete(int point){
-	while(point > 1){
-		if(player[point-1].mark < player[point].mark){
-		    _swap(player[point-1],player[point]);//如果分数低，往前排
-			point--;
-			continue;
-			
-		}
-		else{
-	 	    if(player[point-1].mark == player[point].mark){
-	 	    	if(player[point-1].id > player[point].id){
-	 	    		_swap(player[point-1],player[point]);
-	 	    		point--;
-	 	    	}
-	 	    	else{
-	 	    		break;
-	 	    	}
-		    }
-		    else{
-		    	break;
-		    }
-	    }	 
-    }
-	return; 
-} 
+int main() {
+	int N, R, Q;
+	cin >> N >> R >> Q;
+	N *= 2;
+	for (int i = 1; i <= N; i++){
+		player[i].id = i;
+		cin >> player[i].mark;
+	}
+	for (int i = 1; i <= N; i++){
+		cin >> player[i].power;
+	}
+	sort(player + 1, player + N + 1, cmp);//比赛前排序
 
-int main(){
-    int n;
-    int r;
-    int q;
-    cin >> n >> r >> q;
-    for(int i = 1; i <= 2*n; i++){
-        player[i].id = i;
-        cin >> player[i].mark;
-    }
-    for(int i = 1; i <= 2*n; i++){
-        cin >> player[i].power;
-    }
- 
-    sort(player+1,player+1+2*n,cmp1);
-    for(int j = 1; j <= r; j++){//进行r轮比赛 
-		for(int i = 1; i <= 2*n; i += 2){
-    		if(player[i].power > player[i+1].power){
-    			player[i].mark++;
-    			//排序
-    			complete(i);
-    		}
-    		else{
-    			 player[i+1].mark++;
-    			 //排序
-    			 complete(i+1);   
-    		} 
+	for (int i = 1; i <= N; i++) {
+		tot.push(player[i]);
+	}
+
+	for (int i = 0; i < R; i++){
+		for (int j = 1; j <= N; j += 2) {
+			person a = tot.front();
+			tot.pop();
+			person b = tot.front();
+			tot.pop();
+			if (a.power > b.power) {
+				a.mark++;
+				winner.push(a);
+				loser.push(b);
+			}
+			else {
+				b.mark++;
+				winner.push(b);
+				loser.push(a);
+			}//赢的人入队winner，输的人入队loser
 		}
-    } 
-    cout << player[q].id;
-    return 0;
+		mergesort();
+	}
+
+	for (int i = 1; i < Q; i++) {
+		tot.pop();
+	}
+
+	cout << tot.front().id;
+	return 0;
 }
